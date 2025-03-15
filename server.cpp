@@ -89,6 +89,7 @@ int main()
         if(t.joinable()) t.join();
     }
 
+    // Close server socket
     close(server_socket);
     exit(EXIT_SUCCESS);
 }

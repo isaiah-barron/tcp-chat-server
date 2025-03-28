@@ -37,20 +37,30 @@ int main()
     //Connect to server
     cout << "Connecting to Server...\n";
     if (connect(socket_fd, (struct sockaddr *)&server_address, sizeof(server_address)) == -1){
-        perror("Failed to connect to server");
+        perror("Failed to connnect to server");
         exit(EXIT_FAILURE);
     }
 
     cout << "Communicating with Server. Have fun!!\n";
     while(true){
         // take input from user
+        // how does cin handle buffer overflow???
+        cin >> buffer;
+
         // send input to server
+        cout << "Sending message to server\n";
+
+        // if client enters '/quit', break out of loop and close connection
+        // need to add error handling when data exceeds buffer size
+        if(send(socket_fd, buffer, BUFFER_SIZE, MSG_ERRQUEUE) == -1){ 
+            perror("Error when sending data to server");
+            break;
+        }
+
         // recieve data from server
-        // if client enters /quit, break out of loop and close connection
-        cout << "sending data.....\n";
-        break;
     }
 
+    cout << "Closing connection to server!!!!!";
     close(socket_fd);
     exit(EXIT_SUCCESS);
 }

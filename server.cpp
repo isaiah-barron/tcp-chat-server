@@ -1,9 +1,10 @@
 #include <unistd.h>         // For close() system call
+#include <cstring>
 #include <sys/socket.h>     // For socket(), bind(), listen(), accept()
+#include <string.h>         // Basic string library functions
 #include <arpa/inet.h>      // For inet_addr() and other networking functions
 #include <iostream>         // For basic input/output
 #include <thread>
-#include <cstring>
 #include <mutex>
 #include <vector>
 
@@ -16,16 +17,25 @@ void handleClient(int conn_fd)
 {
     char buffer[BUFFER_SIZE];
 
-    printf("Client connected...");
+    cout << "Client connected...\n";
+    cout << "SERVICING CLIENT....\n";
     while (true){
         // wait to recv message from client
+        cout << "waiting for message.\n\n";
+
+        // need interrupt hanlding for ctrl c and when client sends '/quit'
+        // need to handle error when send exceeds buffer size
+        if(recv(conn_fd, buffer, BUFFER_SIZE, 0) == -1){ 
+            perror("Error in receiving data from client");
+            exit(EXIT_FAILURE);
+        }
+        cout << buffer;
+
         // server send confirmation message to client
         // need to add handling of when client disconnects
         // need to add handling when theres a send or recv error (-1)
             // do we close the connection or can the server send a reset and have the client reconnect if it recvs a reset from server?
         
-        // place holder
-        break;
     }
 
     close(conn_fd);
@@ -34,6 +44,7 @@ void handleClient(int conn_fd)
 int start_server(sockaddr_in address)
 {
     // Create server socket using IPv4 and socket type TCP 
+    cout << "creating tcp socket\n";
     int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_fd == -1){
         perror("Socket creation failed");
@@ -45,6 +56,7 @@ int start_server(sockaddr_in address)
     address.sin_addr.s_addr = INADDR_ANY; // This will bind to all available interfaces
     address.sin_port = htons(PORT); // coverts port number to network byte order
 
+    cout << "binding socket to ip address and port\n";
     if (bind(socket_fd, (sockaddr*)&address, sizeof(address)) == -1){
         perror("Bind failed");
         close(socket_fd);
@@ -52,6 +64,7 @@ int start_server(sockaddr_in address)
     }
 
     // Server will listen for connections
+    cout << "Setting socket to listen for connections\n";
     if (listen(socket_fd, 10)){
         perror("Listen failed");
         close(socket_fd);
@@ -74,7 +87,7 @@ int main()
     // Server waits to accept new connections
     while (true){
         // We wait for a connection from a client
-        printf("Server waiting for a client to connect....");
+        cout << "Server waiting for a client to connect....\n";
         if((client_socket = accept(server_socket, (sockaddr*)&client_address, &cli_addr_len)) == -1){
             perror("Accept failed");
             close(server_socket);

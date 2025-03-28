@@ -31,6 +31,14 @@ $(TARGET2): $(OBJ2)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean target: Remove object files and executables
+# clean server program
+clean-program1:
+	rm -f $(OBJ1) $(TARGET1)
+
+# clean client program
+clean-program2:
+	rm -f $(OBJ2) $(TARGET2)
+
+# Clean target: Remove all object files and executables
 clean:
 	rm -f $(OBJ1) $(OBJ2) $(TARGET1) $(TARGET2)

@@ -29,7 +29,7 @@ void handleClient(int conn_fd)
             perror("Error in receiving data from client");
             exit(EXIT_FAILURE);
         }
-        cout << buffer;
+        cout << buffer << '\n';
 
         // server send confirmation message to client
         // need to add handling of when client disconnects

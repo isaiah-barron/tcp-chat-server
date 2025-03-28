@@ -54,7 +54,7 @@ int main()
         // need to add error handling when data exceeds buffer size
         if(send(socket_fd, buffer, BUFFER_SIZE, MSG_ERRQUEUE) == -1){ 
             perror("Error when sending data to server");
-            break;
+            exit(EXIT_FAILURE);
         }
 
         // recieve data from server

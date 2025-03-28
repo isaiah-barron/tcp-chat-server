@@ -19,6 +19,7 @@ void handleClient(int conn_fd)
 
     cout << "Client connected...\n";
     cout << "SERVICING CLIENT....\n";
+
     while (true){
         // wait to recv message from client
         cout << "waiting for message.\n\n";
@@ -36,6 +37,9 @@ void handleClient(int conn_fd)
         // need to add handling when theres a send or recv error (-1)
             // do we close the connection or can the server send a reset and have the client reconnect if it recvs a reset from server?
         
+        // place holder
+        cout << "SERVICING CLIENT....\n";
+        break;
     }
 
     close(conn_fd);

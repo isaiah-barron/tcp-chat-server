@@ -37,7 +37,7 @@ int main()
     //Connect to server
     cout << "Connecting to Server...\n";
     if (connect(socket_fd, (struct sockaddr *)&server_address, sizeof(server_address)) == -1){
-        perror("Failed to connnect to server");
+        perror("Failed to connect to server");
         exit(EXIT_FAILURE);
     }
 

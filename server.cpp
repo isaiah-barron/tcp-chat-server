@@ -17,6 +17,7 @@ void handleClient(int conn_fd)
 {
     char buffer[BUFFER_SIZE];
 
+    printf("Client connected...");
     while (true){
         // wait to recv message from client
         // server send confirmation message to client
@@ -24,7 +25,7 @@ void handleClient(int conn_fd)
         // need to add handling when theres a send or recv error (-1)
             // do we close the connection or can the server send a reset and have the client reconnect if it recvs a reset from server?
         
-        //  place holder
+        // place holder
         break;
     }
 
@@ -74,6 +75,7 @@ int main()
     // Server waits to accept new connections
     while (true){
         // We wait for a connection from a client
+        printf("Server waiting for a client to connect....");
         if((client_socket = accept(server_socket, (sockaddr*)&client_address, &cli_addr_len)) == -1){
             perror("Accept failed");
             close(server_socket);

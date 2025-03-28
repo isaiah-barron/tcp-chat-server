@@ -1,3 +1,6 @@
+# Ignore files with no extensions
+/*.[^.]*
+
 # Object files
 *.o
 *.obj

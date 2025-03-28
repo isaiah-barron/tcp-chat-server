@@ -1,10 +1,9 @@
 #include <unistd.h>         // For close() system call
-#include <cstring>
 #include <sys/socket.h>     // For socket(), bind(), listen(), accept()
-#include <string.h>         // Basic string library functions
 #include <arpa/inet.h>      // For inet_addr() and other networking functions
 #include <iostream>         // For basic input/output
 #include <thread>
+#include <cstring>
 #include <mutex>
 #include <vector>
 

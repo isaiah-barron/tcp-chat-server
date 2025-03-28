@@ -1,0 +1,25 @@
+# Object files
+*.o
+*.obj
+
+# Executables and binaries
+*.exe
+*.out
+program
+
+# Build directories
+build/
+bin/
+
+# Dependency directories (if any)
+lib/
+include/
+
+# Debug files
+*.pdb
+
+# Other temporary files
+*~
+\#*
+*.swp
+*.swo

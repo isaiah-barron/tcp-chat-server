@@ -24,7 +24,7 @@ void handleClient(int conn_fd)
         cout << "waiting for message.\n\n";
 
         // need interrupt hanlding for ctrl c and when client sends '/quit'
-        // need to handle error when send exceeds buffer size
+        // need to handle error when buffer size is exceeded
         if(recv(conn_fd, buffer, BUFFER_SIZE, 0) == -1){ 
             perror("Error in receiving data from client");
             exit(EXIT_FAILURE);

@@ -90,7 +90,7 @@ int main()
             // 2) Copy the original buffer into the new one
             strcpy(tmp_buff, buffer);
 
-            // 3) clear any cin errors and read the leftover input
+            // 3) clear any cin errors
             cin.clear();
 
             // 4) grab the leftover input and append to the new buffer
@@ -128,7 +128,8 @@ int main()
             cout << "how much data sent:\n" << total_sent << "\n";
         }
 
-        // recieve data from server
+        // recieve data from server???
+        // maybe an ack message that data was received
     }
 
     close_client_socket();

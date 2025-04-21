@@ -4,12 +4,12 @@ CXXFLAGS = -g -Wall
 
 # server program
 TARGET1 = server
-SRC1 = server.cpp
+SRC1 = server_main.cpp
 OBJ1 = $(SRC1:.cpp=.o)
 
 # client program
 TARGET2 = client
-SRC2 = client.cpp
+SRC2 = client_main.cpp client.cpp
 OBJ2 = $(SRC2:.cpp=.o)
 
 # Build both programs

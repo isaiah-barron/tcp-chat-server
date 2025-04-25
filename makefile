@@ -5,7 +5,7 @@ LDFLAGS = -pthread
 
 # server program
 TARGET1 = server
-SRC1 = server_main.cpp
+SRC1 = server_main.cpp server.cpp
 OBJ1 = $(SRC1:.cpp=.o)
 
 # client program

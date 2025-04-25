@@ -16,8 +16,8 @@ WORKDIR /app
 
 # Copy only the necessary files for the server into the container
 COPY server_main.cpp ./
-# COPY server.cpp ./
-# COPY server.hh ./
+COPY server.cpp ./
+COPY server.hh ./
 COPY makefile ./
 
 # Build the server program

@@ -1,6 +1,7 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -g -Wall
+CXXFLAGS = -g -Wall -std=c++11
+LDFLAGS = -pthread
 
 # server program
 TARGET1 = server
@@ -17,11 +18,11 @@ all: $(TARGET1) $(TARGET2)
 
 # Rule for server program
 $(TARGET1): $(OBJ1)
-	$(CXX) $(OBJ1) -o $(TARGET1)
+	$(CXX) $(OBJ1) $(LDFLAGS) -o $(TARGET1)
 
 # Rule for client program
 $(TARGET2): $(OBJ2)
-	$(CXX) $(OBJ2) -o $(TARGET2)
+	$(CXX) $(OBJ2) $(LDFLAGS) -o $(TARGET2)
 
 # Compile .cpp files into .o files for server program
 %.o: %.cpp

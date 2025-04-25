@@ -1,6 +1,3 @@
-# Ignore files with no extensions
-/*.[^.]*
-
 # Object files
 *.o
 *.obj
@@ -26,3 +23,6 @@ include/
 \#*
 *.swp
 *.swo
+
+# ignore scripts
+wait-for-it.sh

@@ -11,22 +11,31 @@ using namespace std;
 Client* Client::instance = nullptr;
 
 //Contructor Definition
-Client::Client(ssize_t buf_size) {
+Client::Client(ssize_t buff_size) {
     instance = this;
 
-    BUFFER_SIZE = buf_size;
-    buffer = new char[buf_size];
+    BUFFER_SIZE = buff_size;
+    buffer = new char[buff_size];
+
+    //initialize hints struct
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_INET;
+
+    // get hostname info from addrinfo struct
+    int res = getaddrinfo("tcp_server", "8080", &hints, &server_addr_info);
+    if (res){
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(res));
+        exit(EXIT_FAILURE);
+    }
 
     //create socket
-    socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    socket_fd = socket(server_addr_info->ai_family, 
+                       server_addr_info->ai_socktype, 
+                       server_addr_info->ai_protocol);
     if (socket_fd == -1){
         perror("Socket failed");
         exit(EXIT_FAILURE);
     }
-
-    // configure server address and port struct
-    server_address.sin_family = AF_INET;
-    server_address.sin_port = htons(PORT);
 
     create_signal_handling();
 }
@@ -50,15 +59,9 @@ void Client::create_signal_handling()
 
 void Client::connect_to_server()
 {
-    // Convert ipv4 address from text to binary format
-    if(inet_pton(AF_INET, "127.0.0.1", &server_address.sin_addr) == -1){
-        perror("Invalid address or address not supported");
-        exit(EXIT_FAILURE);
-    }
-
     //Connect to server
     cout << "Connecting to Server...\n";
-    if (connect(socket_fd, (struct sockaddr *)&server_address, sizeof(server_address)) == -1){
+    if (connect(socket_fd, server_addr_info->ai_addr, server_addr_info->ai_addrlen) == -1){
         perror("Failed to connect to server");
         exit(EXIT_FAILURE);
     }
@@ -72,7 +75,7 @@ int Client::read_user_input()
         return -1;
     }
 
-    if (cin.gcount() == BUFFER_SIZE - 1 && strlen(buffer) == BUFFER_SIZE - 1){
+    if (cin.gcount() == BUFFER_SIZE - 1 && static_cast<ssize_t>(strlen(buffer)) == BUFFER_SIZE - 1){
         resize_buffer();
     }
 

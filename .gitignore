@@ -23,6 +23,3 @@ include/
 \#*
 *.swp
 *.swo
-
-# ignore scripts
-wait-for-it.sh

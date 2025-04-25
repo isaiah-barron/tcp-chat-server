@@ -100,7 +100,3 @@ If you'd like to restart the containers, use the following commands:
 
 - **Server isn't starting fast enough**: The server may take a while to start. Make sure the server is fully up and running before starting the client container.
 - **Client can't connect**: Ensure both containers are connected to the same network and the server is listening on the correct port.
-
----
-
-Let me know if you need any further adjustments!

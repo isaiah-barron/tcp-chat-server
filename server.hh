@@ -6,18 +6,25 @@
 
 class Server{
 public:
-
-    //constructor desctructor
     Server(ssize_t buff_size);
-    ~Server();
+    ~Server(); // set stop_flag to true and we will need to clean up threads here
 
+    void start();
+    void stop();
+    void run();
+    
 private:
-
+    
+    int server_socket;
+    sockaddr_in server_address, client_address;
     char *buffer;
     ssize_t BUFFER_SIZE;
-    int conn_fd;
-
+    vector<thread> threads;
+    atomic<bool> stop_flag; //allows us to terminate threads when server class is out of scope
     
+    void handleClient(int conn_fd);
+    int acceptConnection();
+    void recieveMessage();
 };
 
 #endif // SERVER.hh

@@ -20,5 +20,5 @@ COPY client.cpp ./
 COPY client.hh ./
 COPY makefile ./
 
-# Build the server program
+# Build the client program
 RUN make client

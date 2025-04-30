@@ -22,8 +22,8 @@ private:
     sockaddr_in server_address, client_address;
     char *buffer;
     ssize_t BUFFER_SIZE;
-    vector<thread> threads;
-    atomic<bool> stop_flag; //allows us to terminate threads when server class is out of scope
+    std::vector<std::thread> threads;
+    std::atomic<bool> stop_flag; //allows us to terminate threads when server class is out of scope
     
     void handleClient(int conn_fd);
     int acceptConnection();

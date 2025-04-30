@@ -3,11 +3,11 @@
 int main()
 {
     Server server(32);
-    Server start();
-    Server run();
+    server.start();
+    server.run();
 
     // Close server socket
-    Server stop();
+    server.stop();
 
     return 0;
 }

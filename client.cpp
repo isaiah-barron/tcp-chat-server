@@ -9,6 +9,7 @@
 using namespace std;
 
 Client* Client::instance = nullptr;
+const char *PORT = "8080";
 
 //Contructor Definition
 Client::Client(ssize_t buff_size) {
@@ -22,7 +23,7 @@ Client::Client(ssize_t buff_size) {
     hints.ai_family = AF_INET;
 
     // get hostname info from addrinfo struct
-    int res = getaddrinfo("tcp_server", "8080", &hints, &server_addr_info);
+    int res = getaddrinfo("tcp_server", PORT, &hints, &server_addr_info);
     if (res){
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(res));
         exit(EXIT_FAILURE);

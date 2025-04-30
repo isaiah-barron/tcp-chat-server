@@ -3,6 +3,9 @@
 
 #include <netinet/in.h>
 #include <netdb.h>
+#include <thread>
+#include <atomic>
+#include <vector>
 
 class Server{
 public:

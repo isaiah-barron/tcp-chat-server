@@ -5,9 +5,6 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <iostream>
-#include <thread>
-#include <mutex>
-#include <vector>
 
 using namespace std;
 

@@ -8,4 +8,6 @@ int main()
 
     // Close server socket
     Server stop();
+
+    return 0;
 }

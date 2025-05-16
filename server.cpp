@@ -100,8 +100,8 @@ void Server::handleClient(int conn_fd)
     cout << "Client connected...\n";
     cout << "SERVICING CLIENT....\n";
 
-    // While stop_flag is false, thread continoues
-    // to service the client. load() makes reading stop_flag thread safe
+    // While stop_flag is false, thread continouesly
+    // services the client. load() makes reading stop_flag thread safe
     while (!stop_flag.load()){
         // wait to recv message from client
         cout << "waiting for message.\n\n";

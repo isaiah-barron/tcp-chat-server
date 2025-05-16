@@ -11,6 +11,9 @@ using namespace std;
 
 const char PORT = '8080';
 
+// define instance
+Server* Server::instance = nullptr; 
+
 Server::Server(ssize_t buff_size)
 {
     BUFFER_SIZE = buff_size;

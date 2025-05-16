@@ -13,6 +13,10 @@ constexpr int PORT = 8080;
 ssize_t sendFull(int sockfd, const void* buf, size_t len) {
     size_t total = 0;
     ssize_t sent = 0;
+
+    // we have to cast it because we cant do
+    // ptr arithmitec (or dereference) with a generic pointer (void).
+    // we are not modifying the buffer, so we make it const
     const char* ptr = static_cast<const char*>(buf);
 
     // only send the data we havent sent yet up to len
@@ -39,8 +43,8 @@ int main() {
 
     //create socket
     int socket_fd = socket(server_addr_info->ai_family, 
-                           server_addr_info->ai_socktype, 
-                           server_addr_info->ai_protocol);
+        server_addr_info->ai_socktype, 
+        server_addr_info->ai_protocol);
 
     if (socket_fd == -1){
         perror("Socket failed");
@@ -49,6 +53,7 @@ int main() {
 
     if (connect(socket_fd, server_addr_info->ai_addr, server_addr_info->ai_addrlen) < 0) {
         perror("Connect failed");
+        close(socket_fd);
         exit(EXIT_FAILURE);
     }
 

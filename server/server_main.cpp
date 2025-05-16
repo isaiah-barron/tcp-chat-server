@@ -4,24 +4,25 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <thread>
 #include <vector>
-#include <atomic>
 
 using namespace std;
 
 constexpr int PORT = 8080;
 
-ssize_t recvFull(int sockfd, const void* buf, size_t len) {
+ssize_t recvFull(int sockfd, void* buf, size_t len) {
     size_t total = 0;
-    ssize_t sent = 0;
-    const char* ptr = static_cast<const char*>(buf);
+    ssize_t recieved = 0;
+
+    // we have to cast it because we cant do
+    // ptr arithmitec (or dereference) with a generic pointer (void)
+    char* ptr = static_cast<char*>(buf);
 
     // only send the data we havent sent yet up to len
     while (total < len) {
-        sent = send(sockfd, ptr + total, len - total, 0);
-        if (sent <= 0) return sent;
-        total += sent;
+        recieved = recv(sockfd, ptr + total, len - total, 0);
+        if (recieved <= 0) return recieved;
+        total += recieved;
     }
     return total;
 }
@@ -44,13 +45,13 @@ int main() {
         return 1;
     }
 
+    cout << "Client connected...\n";
     while (true) {
-        cout << "Client connected...\n";
 
         uint32_t net_len;
         ssize_t r = recvFull(client_fd, &net_len, sizeof(net_len));
         if (r <= 0) {
-            std::cout << "Client disconnected or error\n";
+            cout << "Client disconnected or error\n";
             break;
         }
 
@@ -70,10 +71,7 @@ int main() {
 
         cout << "Received message: " << buffer << endl;
 
-        // since client sends us msg len before we read the actual data
-        // we create a buffer with that exact size, thus we need to delete the buffer
-        // once we are done reading the message so we can create a new buffer
-        // for the next message
+        // Delete buffer for the next message
         delete[] buffer;
     }
 

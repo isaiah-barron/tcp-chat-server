@@ -11,16 +11,14 @@ Make sure you have Docker and Docker Compose installed on your machine.
 ### Project Structure
 ```
 .
-├── Dockerfile.server
-├── Dockerfile.client
 ├── docker-compose.yml
-├── client_main.cpp
-├── client.cpp
-├── client.hh
-├── server_main.cpp
-├── server.cpp
-├── server.hh
 ├── makefile
+├── client/
+   ├── client_main.cpp
+   ├── Dockerfile.client
+├── server/
+   ├── server_main.cpp
+   ├──  Dockerfile.server
 ```
 
 ### Steps to Run
@@ -48,7 +46,7 @@ docker network create chatnet
 Once the Docker network is created, start the server container manually. The server will wait for client connections.
 
 ```bash
-docker run -it --network chatnet --name tcp_server tcp-chat-server ./server
+docker run -it --network chatnet --name tcp_server tcp-chat-server
 ```
 
 This command starts the server in interactive mode. The `--network chatnet` flag connects the container to the `chatnet` network, which is necessary for communication between the server and client containers.
@@ -58,7 +56,7 @@ This command starts the server in interactive mode. The `--network chatnet` flag
 After the server is running and waiting for connections, you can manually start the client container to connect to the server.
 
 ```bash
-docker run -it --network chatnet --name tcp_client tcp-chat-client ./client
+docker run -it --network chatnet --name tcp_client tcp-chat-client
 ```
 
 This command starts the client container and connects it to the same `chatnet` network, allowing it to communicate with the server.

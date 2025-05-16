@@ -4,11 +4,11 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile.server
+      dockerfile: server/Dockerfile.server
     image: tcp-chat-server
 
   client:
     build:
       context: .
-      dockerfile: Dockerfile.client
+      dockerfile: client/Dockerfile.client
     image: tcp-chat-client

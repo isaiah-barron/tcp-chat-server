@@ -15,13 +15,9 @@ Make sure you have Docker and Docker Compose installed on your machine.
 ├── makefile
 ├── client/
    ├── client_main.cpp
-   ├── client.cpp
-   ├── client.hh
    ├── Dockerfile.client
 ├── server/
    ├── server_main.cpp
-   ├── server.cpp
-   ├── server.hh
    ├──  Dockerfile.server
 ```
 

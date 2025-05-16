@@ -23,3 +23,6 @@ include/
 \#*
 *.swp
 *.swo
+
+# ide directories
+.vscode

@@ -15,10 +15,16 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy only the necessary files for the server into the container
-COPY server_main.cpp ./
-# COPY server.cpp ./
-# COPY server.hh ./
+COPY server/ ./server/
+
+# copy makefile from root
 COPY makefile ./
 
+#debug
+RUN ls -l /app/server/
+
 # Build the server program
-RUN make server
+RUN make bin/server
+
+# set default command
+CMD ["./bin/server"]

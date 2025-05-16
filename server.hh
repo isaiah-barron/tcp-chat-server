@@ -17,6 +17,10 @@ public:
     void run();
     
 private:
+    // Static pointer to the current instance
+    // we need this so we can call non-static 
+    // methods in a static method
+    static Server* instance;
     
     int server_socket;
     sockaddr_in server_address, client_address;
@@ -28,6 +32,12 @@ private:
     void handleClient(int conn_fd);
     int acceptConnection();
     void recieveMessage();
+
+    // signal handling
+    static void signalHandler(int s);
+    void createSignalHandling();
+
+    void shutDownThreads();
 };
 
 #endif // SERVER.hh

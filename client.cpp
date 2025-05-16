@@ -8,7 +8,6 @@
 
 using namespace std;
 
-Client* Client::instance = nullptr;
 const char *PORT = "8080";
 
 //Contructor Definition

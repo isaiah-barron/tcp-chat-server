@@ -5,6 +5,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <iostream>
+#include <signal.h>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ Server::Server(ssize_t buff_size)
 {
     BUFFER_SIZE = buff_size;
     buffer = new char[buff_size];
+    instance = this;
 
     // Create server socket using IPv4 and socket type TCP 
     cout << "Creating Server socket\n";
@@ -31,14 +33,8 @@ Server::Server(ssize_t buff_size)
 
 Server::~Server()
 {
-    // Tell all threads to shutdown
-    // store is thread safe
-    stop_flag.store(true);
-
-    // Clean up threads
-    for (auto& t : threads){
-        if(t.joinable()) t.join();
-    }
+    instance = nullptr;
+    shutDownThreads();
 }
 
 void Server::start()
@@ -112,7 +108,6 @@ void Server::handleClient(int conn_fd)
 
         // TODO: 
         // 1) Error handling
-            // need interrupt hanlding for ctrl c
             // need to add handling for when client sends '/quit'
             // need to add handling of when client disconnects
             // need to add handling when theres a send or recv error (-1)
@@ -131,4 +126,33 @@ void Server::handleClient(int conn_fd)
     }
 
     close(conn_fd);
+}
+
+void Server::signalHandler(int s)
+{
+    printf("Caught signal %d\n", s);
+    instance->shutDownThreads();
+}
+
+void Server::createSignalHandling()
+{
+    struct sigaction sigIntHandler;
+
+    sigIntHandler.sa_handler = signalHandler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+
+    sigaction(SIGINT, &sigIntHandler, NULL);
+}
+
+void Server::shutDownThreads()
+{
+    // Tell all threads to shutdown
+    // store is thread safe
+    stop_flag.store(true);
+
+    // Clean up threads
+    for (auto& t : threads){
+        if(t.joinable()) t.join();
+    }
 }

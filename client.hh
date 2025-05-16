@@ -25,13 +25,11 @@ private:
     int socket_fd;
     struct addrinfo hints, *server_addr_info; // allows us to get host info of server
 
-    // signale handling
+    // signal handling
     static void signal_handler(int s);
     void create_signal_handling();
 
-    // user input
     int read_user_input();
-
     void resize_buffer();
 
     // client messaging
